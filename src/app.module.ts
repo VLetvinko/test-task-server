@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ItemsModule } from './items/items.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MulterModule } from '@nestjs/platform-express';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -15,7 +17,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     entities: ['dist/**/*.entity{.ts,.js}'],
     synchronize: true
   }),
-    ItemsModule],
+    MulterModule.register({
+      dest: '/upload',
+    }),
+    FilesModule,
+    ItemsModule,
+    FilesModule],
   controllers: [AppController],
   providers: [AppService],
 })
